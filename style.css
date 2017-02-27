@@ -1,0 +1,6 @@
+#mapcontainer {
+	height: 660px;
+	width: 800px;
+	position: absolute;
+	border: 4px solid #282828;
+}
