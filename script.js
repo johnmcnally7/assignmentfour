@@ -18,22 +18,21 @@
          return d > 4500   ? '#54278F' :
                 d > 2549   ? '#756BB1' :
                 d > 1295   ? '#9E9AC8' :
-                d > 395.60 ? '#CBC9E2' :
+                d > 395    ? '#CBC9E2' :
                              '#F2F0F7' ;
     }
 
     //fill color for geojson based on the feature
     function style(feature) {
         return {
+            fillColor: getColor(feature.properties.POPDEN2010),
             weight: 1,
-            opactiy: 1,
+            opacity: .9,
             color: 'white',
             dashArray: '2',
-            fillOpacity: 0.7,
-            fillColor: (feature.properties.POPDEN2010)
+            fillOpacity: 0.7
         };
     }
 
-   var geojson = L.geoJson(njMuni, {
-    style: style,
-   }).addTo(map);
+var geojson = L.geoJson(njMuni, {style: style}).addTo(map);
+
