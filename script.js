@@ -36,3 +36,44 @@
 
 var geojson = L.geoJson(njMuni, {style: style}).addTo(map);
 
+//highlight feature on mouseover
+function highlightFeature(e) {
+    var layer= e.target;
+
+    layer.setStyle({
+        weight: 2,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.6
+    });
+
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+}
+
+//mousout
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+}
+
+//zoom to feature on click of municipality
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
+
+//listen for the functions so that on these actions it highlights, zooms etc.
+function onEachFeature(feature,layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
+
+//add these features to the map
+geojson = L.geoJson(njMuni, {
+    style: style,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
