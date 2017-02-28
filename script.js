@@ -11,7 +11,7 @@
       }).addTo(map);
 
     //add municipal geojson data to map
-    L.geoJson(njMuni).addTo(map);
+    var layer = L.geoJson(njMuni).addTo(map);
 
     //color selector for pop density
     function getColor(d) {
@@ -71,9 +71,21 @@ function onEachFeature(feature,layer) {
     });
 }
 
+function onEachFeature(feature,layer) { 
+    {
+        var PopupText = [];
+        PopupText.push("<b>Municipality: </b>" + feature.properties.NAME);
+        PopupText.push("<b><br>Population per square mile: </b>" + feature.properties.POPDEN2010)
+        layer.bindPopup("<p>" + PopupText.join("") + "</p>");
+    }
+}
+
 //add these features to the map
 geojson = L.geoJson(njMuni, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(map);
+
+
+
 
